@@ -21,9 +21,9 @@ pipeline {
         // }
         stage('Deliver') {
             steps {
-                sudo sh './jenkins/scripts/deliver.sh'
+                sh 'chmod +x ./jenkins/scripts/deliver.sh'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sudo sh './jenkins/scripts/kill.sh'
+                sh 'chmod +x ./jenkins/scripts/kill.sh'
             }
         }
     }
