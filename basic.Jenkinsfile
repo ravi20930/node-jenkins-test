@@ -10,8 +10,9 @@ pipeline {
     
     stage('Deliver') {
         steps {
-            sh 'pm2 start app.js --name my-app'
-            sh 'sleep 60s'
+            sh 'git pull'
+            sh 'pm2 restart my-app'
+            sh 'sleep 10s'
             // input message: 'Finished using the web site? (Click "Proceed" to continue)'
             // sh 'chmod +x ./jenkins/scripts/kill.sh'
         }
