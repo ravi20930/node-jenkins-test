@@ -3,23 +3,17 @@ pipeline {
   
   stages {
     stage('Build') {
-      steps {
-        // Checkout source code from your version control system
-        checkout scm
-        
-        // Install Node.js dependencies
-        sh 'npm install'
-      }
+        steps {
+            sh 'npm install'
+        }
     }
     
-    stage('Start Application') {
-      steps {
-        // Start Node.js application on port 3000
-        sh 'node app.js &'
-        
-        // Wait for the application to start (optional)
-        sleep 10
-      }
+    stage('Deliver') {
+        steps {
+            sh 'node app.js'
+            input message: 'Finished using the web site? (Click "Proceed" to continue)'
+            sh 'chmod +x ./jenkins/scripts/kill.sh'
+        }
     }
   }
 }
