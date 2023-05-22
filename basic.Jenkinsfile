@@ -10,7 +10,7 @@ pipeline {
     
     stage('Deliver') {
         steps {
-            sh 'git pull'
+            sh 'git pull origin master'
             sh 'pm2 restart my-app'
             sh 'sleep 10s'
             // input message: 'Finished using the web site? (Click "Proceed" to continue)'
