@@ -13,7 +13,7 @@ pipeline {
             sh 'git pull origin master'
             sh 'sudo pm2 ls'
             sh 'sudo pm2 restart node-app'
-            sh 'sleep 100s'
+            sh 'sleep 10s'
             // input message: 'Finished using the web site? (Click "Proceed" to continue)'
             // sh 'chmod +x ./jenkins/scripts/kill.sh'
         }
