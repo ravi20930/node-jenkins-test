@@ -11,6 +11,7 @@ pipeline {
     stage('Deliver') {
         steps {
             //run pm2 as root user and jenkins to sudo group also "jenkins ALL=(ALL) NOPASSWD: ALL" to sudoers file (sudo visudo)
+            sh 'git fetch'
             sh 'git pull origin master'
             sh 'sudo pm2 ls'
             sh 'sudo pm2 restart node-app'
