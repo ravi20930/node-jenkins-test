@@ -3,38 +3,18 @@ pipeline {
   
   stages {
     stage('Build') {
-      steps {
-        // Checkout source code from your version control system
-        checkout scm
-        
-        // Install Node.js dependencies
-        sh 'npm install'
-      }
+        steps {
+            sh 'npm install'
+        }
     }
     
-    stage('Start Application') {
-      steps {
-        // Start Node.js application in the background
-        script {
-          // Start the application in a subshell
-          sh 'nohup bash -c "node app.js > /dev/null 2>&1 & echo $! > app_pid.txt"'
-          
-          // Sleep for a few seconds to allow the application to start (optional)
-          sleep 10
+    stage('Deliver') {
+        steps {
+            sh 'export BUILD_ID=dontKillMe \ export JENKINS_NODE_COOKIE=dontKillMe'
+            sh 'pm2 start app.js --name my-app'
+            // input message: 'Finished using the web site? (Click "Proceed" to continue)'
+            // sh 'chmod +x ./jenkins/scripts/kill.sh'
         }
-      }
-    }
-  }
-  
-  post {
-    always {
-      // Read the application PID from the file
-      script {
-        def pid = readFile('app_pid.txt').trim()
-        
-        // Kill the Jenkins process group to avoid terminating the Node.js application
-        sh "kill -- -${pid}"
-      }
     }
   }
 }
